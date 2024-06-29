@@ -1,0 +1,40 @@
+It is mentioned billions of requests per day,
+and we do not know how many billions.. 2 billion or 20 billion ?
+
+Input data:
+{
+"customerID":1,
+"tagID":2,
+"userID":"aaaaaaaa-bbbb-cccc-1111-222222222222",
+"remoteIP":"123.234.56.78",
+"timestamp":1500000000
+}
+
+Each row will be roughly (16 chars, 16 chars, 64 chars, 45 chars allowing IPv6, 16 chars)
+- roughly a 160 chars per row, or per write
+
+Assuming ASCII, 1 billion * 160 * 2 => 320 billion bytes => 320 GB per day
+If instead of a billion, it is 100 billion, we are talking about a 32 TB per day. So to know the actual scale is important
+
+Assumptions:
+Input is a few billions of requests per day
+We do not know about the spike of data, a scalable deployment should be able to handle spikes.
+
+Trade offs:
+If the database can hold a few Terabytes of data, and we are concerned only about a weeks statistics,
+then historical data can be moved out from the SQL database periodically. This also means downtime needs to be handled
+with replicas or secondary backups.
+
+If we dont want downtime at all, and want more than a weeks older data statistics, or can expect adhoc date statistics,
+then we need to maintain data in the DB. So we need a database that supports horizontal scaling for storing the terabytes of data
+and also supporting any date statistics, for example last Christmas day. In such cases, the queries can reach exact shard and
+we can benefit from pruning to get faster results.
+
+For demo purpose, I will focus more on a quick solution to see coding abilities.
+
+Notes:
+Filtering & Pagination API
+Use Async where possible
+
+Further improvements:
+Include health check endpoints /health
