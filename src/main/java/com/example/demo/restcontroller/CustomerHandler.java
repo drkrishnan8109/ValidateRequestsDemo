@@ -35,7 +35,7 @@ public class CustomerHandler {
     }
 
     @GetMapping("/{customerId}")
-    public ResponseEntity<Customer> getCustomerByCustomerId(@PathVariable Long customerId) {
+    public ResponseEntity<Customer> getCustomerByCustomerId(@PathVariable Integer customerId) {
         Customer customer = this.requestReceiverService.getCustomerById(customerId);
         return ResponseEntity.ok(customer);
     }

@@ -1,19 +1,20 @@
 package com.example.demo.model;
 
+import io.swagger.models.auth.In;
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class Customer implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-
+   // @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(nullable = false)
-    private long customerId;
+    private Integer customerId;
 
     @Column()
     private long tagId;
@@ -30,19 +31,12 @@ public class Customer {
     public Customer() {
     }
 
-    public UUID getId() {
-        return id;
-    }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public long getCustomerId() {
+    public Integer getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(long customerId) {
+    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 
@@ -78,7 +72,7 @@ public class Customer {
         this.timestamp = timestamp;
     }
 
-    public Customer(long customerId, long tagId, long userId, String remoteIp, Date timestamp) {
+    public Customer(Integer customerId, long tagId, long userId, String remoteIp, Date timestamp) {
         this.customerId = customerId;
         this.tagId = tagId;
         this.userId = userId;

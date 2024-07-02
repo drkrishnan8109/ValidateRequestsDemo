@@ -8,6 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface CustomerRepository extends PagingAndSortingRepository<Customer, Long>, CrudRepository<Customer, Long> {
     Page findAll(Pageable pageable);
-    Customer findCustomerBycustomerId(Long customerId);
+    Customer findCustomerBycustomerId(Integer customerId);
 }
 

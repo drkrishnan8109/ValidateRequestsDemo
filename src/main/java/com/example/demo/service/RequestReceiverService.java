@@ -40,7 +40,7 @@ public class RequestReceiverService {
         return null;
     }
 
-    public Customer getCustomerById(@PathVariable Long customerId) {
+    public Customer getCustomerById(@PathVariable Integer customerId) {
         Customer customer = customerRepository.findCustomerBycustomerId(customerId);
         if(customer==null) throw new RuntimeException("Customer not found");
         return customer;
