@@ -24,4 +24,5 @@ CREATE TABLE `hourly_stats` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_customer_time` (`customer_id`,`time`),
   KEY `customer_idx` (`customer_id`),
- );
+  CONSTRAINT `hourly_stats_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+);

@@ -23,7 +23,7 @@ public class Stats implements Serializable {
     private Long id;
 
     @Column(name = "customer_id", nullable = false)
-    private long customerId;
+    private Integer customerId;
 
     @Column(nullable = false)
     private Timestamp time;
@@ -34,8 +34,8 @@ public class Stats implements Serializable {
     @Column(name = "invalid_count", nullable = false)
     private BigInteger invalidCount = BigInteger.valueOf(0);
 
-   /* @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Customer customer;  */
+    private Customer customer;
 
 }
