@@ -36,5 +36,12 @@ Notes:
 Filtering & Pagination API
 Use Async where possible
 
+Failure scenarios:
+Thundering Herd problem - Use Exponential back off with Jitter
+DB - Replica
+
 Further improvements:
 Include health check endpoints /health
+With scale, isn't it better to introduce a queue and persist the writes to the DB. Pick a DLQ to handle failures as well.
+But of course it is an overkill if the scale is not large since also failure of the queue needs to be handled.
+

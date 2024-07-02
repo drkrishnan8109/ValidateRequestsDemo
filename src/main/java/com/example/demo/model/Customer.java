@@ -1,4 +1,4 @@
-package com.example.demo.dao.jpa;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.sql.Date;

@@ -1,18 +1,20 @@
-package com.example.demo.rest;
+package com.example.demo.restcontroller;
 
-import com.example.demo.dao.jpa.Customer;
+import com.example.demo.model.Customer;
+import com.example.demo.repository.CustomerRepository;
 import com.example.demo.service.RequestReceiverService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping(value = "/demo/v1/customer")
+@RequestMapping(value = "/customers")
 @Api(tags = {"customer"})
 public class CustomerHandler {
 
@@ -30,5 +32,11 @@ public class CustomerHandler {
                                HttpServletRequest request, HttpServletResponse response) {
         Customer createdCustomer = this.requestReceiverService.createCustomer(customer);
         response.setHeader("Location", request.getRequestURL().append("/").append(createdCustomer.getCustomerId()).toString());
+    }
+
+    @GetMapping("/{customerId}")
+    public ResponseEntity<Customer> getCustomerByCustomerId(@PathVariable Long customerId) {
+        Customer customer = this.requestReceiverService.getCustomerById(customerId);
+        return ResponseEntity.ok(customer);
     }
 }
