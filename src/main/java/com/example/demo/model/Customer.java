@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Customer implements Serializable{
 
     @Id
-   // @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(nullable = false)
     private Integer customerId;
 

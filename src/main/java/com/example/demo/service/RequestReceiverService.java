@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.sql.Date;
+import java.util.List;
 
 @Service
 public class RequestReceiverService {
@@ -48,6 +49,13 @@ public class RequestReceiverService {
         if(customer==null)
             logger.info("Customer not found");
         return customer;
+    }
+
+    public List<Customer> getCustomers() {
+        List<Customer> customerList = (List<Customer>) customerRepository.findAll();
+        if(customerList==null)
+            logger.info("No customers found");
+        return customerList;
     }
 }
 

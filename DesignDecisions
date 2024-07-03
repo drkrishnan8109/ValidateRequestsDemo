@@ -1,5 +1,7 @@
 It is mentioned billions of requests per day,
-and we do not know how many billions.. 2 billion or 20 billion ?
+and I do not know how many billions.. 2 billion or 20 billion ?
+Secondly, how many unique customers are there?
+
 
 Input data:
 {
@@ -10,38 +12,36 @@ Input data:
 "timestamp":1500000000
 }
 
-Each row will be roughly (16 chars, 16 chars, 64 chars, 45 chars allowing IPv6, 16 chars)
-- roughly a 160 chars per row, or per write
+Each row will be roughly (32 chars, 16 chars, 64 chars, 45 chars allowing IPv6, 16 chars)
+- roughly a 180 chars per row, or per write
 
-Assuming ASCII, 1 billion * 160 * 2 => 320 billion bytes => 320 GB per day
+Assuming ASCII, 1 billion * 180 * 2 => 360 billion bytes => 360 GB per day
 If instead of a billion, it is 100 billion, we are talking about a 32 TB per day. So to know the actual scale is important
 
 Assumptions:
 Input is a few billions of requests per day
-We do not know about the spike of data, a scalable deployment should be able to handle spikes.
+We do not know about the spike of data, a scalable service deployment should be able to handle spikes.
 
 Trade offs:
-If the database can hold a few Terabytes of data, and we are concerned only about a weeks statistics,
+If the database can hold a few Terabytes of data, and we are concerned only about a history of a weeks statistics,
 then historical data can be moved out from the SQL database periodically. This also means downtime needs to be handled
 with replicas or secondary backups.
 
 If we dont want downtime at all, and want more than a weeks older data statistics, or can expect adhoc date statistics,
 then we need to maintain data in the DB. So we need a database that supports horizontal scaling for storing the terabytes of data
-and also supporting any date statistics, for example last Christmas day. In such cases, the queries can reach exact shard and
-we can benefit from pruning to get faster results.
+and also supporting any date statistics, for example statistics on last Christmas day (or any appropriate usecase). In such cases,
+the queries can reach exact shard if we horizontally shard the database and we can get faster results.
 
-For demo purpose, I will focus more on a quick solution to see coding abilities.
+For demo purpose, I will focus more on a quick solution to see coding abilities. Hence using an embedded H2 DB, only for testing now.
 
 Notes:
 Filtering & Pagination API
-Use Async where possible
 
 Failure scenarios:
 Thundering Herd problem - Use Exponential back off with Jitter
-DB - Replica
 
 Further improvements:
 Include health check endpoints /health
-With scale, isn't it better to introduce a queue and persist the writes to the DB. Pick a DLQ to handle failures as well.
+With scale, isn't it better to introduce a queue and persist the writes to the DB. Also, Pick a DLQ to handle main Queue failures as well.
 But of course it is an overkill if the scale is not large since also failure of the queue needs to be handled.
 

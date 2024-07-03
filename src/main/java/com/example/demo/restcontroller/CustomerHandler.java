@@ -1,7 +1,6 @@
 package com.example.demo.restcontroller;
 
 import com.example.demo.model.Customer;
-import com.example.demo.repository.CustomerRepository;
 import com.example.demo.service.RequestReceiverService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/customers")
@@ -38,5 +39,11 @@ public class CustomerHandler {
     public ResponseEntity<Customer> getCustomerByCustomerId(@PathVariable Integer customerId) {
         Customer customer = this.requestReceiverService.getCustomerById(customerId);
         return ResponseEntity.ok(customer);
+    }
+
+    @GetMapping("/customers")
+    public ResponseEntity<List<Customer>> getCustomer() {
+        List<Customer> customerList = this.requestReceiverService.getCustomers();
+        return ResponseEntity.ok(customerList);
     }
 }
